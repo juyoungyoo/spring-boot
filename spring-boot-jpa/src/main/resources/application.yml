@@ -1,8 +1,14 @@
 spring:
   datasource:
+    initialization-mode: always
     url: jdbc:postgresql://localhost:5432/colini
     username: friday
     password: pass
+  jpa:
+    show-sql: true
+#    generate-ddl: false
+#    hibernate:
+#      ddl-auto: create
 
 
 #spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation=true
