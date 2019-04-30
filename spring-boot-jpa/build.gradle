@@ -1,8 +1,8 @@
 plugins {
     id 'org.springframework.boot' version '2.1.4.RELEASE'
     id 'java'
+    id "org.flywaydb.flyway" version "5.0.7"
 }
-
 apply plugin: 'io.spring.dependency-management'
 
 group = 'com.juyoung.infjpa'
@@ -17,6 +17,12 @@ configurations {
 
 repositories {
     mavenCentral()
+}
+flyway {
+    url = 'jdbc:postgresql://localhost:5432/colini'
+    user = 'friday'
+    password = 'pass'
+//    locations = ["filesystem:${file('src/main/resources/db/migration').absolutePath}"]
 }
 
 dependencies {
