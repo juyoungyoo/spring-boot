@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/colini
+    username: friday
+    password: pass
+  jpa:
+    show-sql: true
+    generate-ddl: false
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+    encoding: UTF-8
+
+
