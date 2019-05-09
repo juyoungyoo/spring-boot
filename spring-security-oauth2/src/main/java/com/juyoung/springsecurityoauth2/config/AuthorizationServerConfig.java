@@ -17,10 +17,10 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
-    private TokenStore tokenStore;  // token 저장소 ( default : 임메모리 ) > DB로 변경
+    private TokenStore tokenStore;  // todo : token 저장소 ( default : inMemory > DB )
 
     @Autowired
-    private AuthenticationManager authenticationManager;    // 핵심 interface
+    private AuthenticationManager authenticationManager;    // 핵심 : 인증 처리
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -42,8 +42,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 
     @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints.tokenStore(tokenStore)
                 .authenticationManager(authenticationManager);
     }
+
+
 }

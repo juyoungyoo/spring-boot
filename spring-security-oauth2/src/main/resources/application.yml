@@ -1,1 +1,10 @@
+logging:
+  level:
+    org.springframework.security: DEBUG
+#    org.hibernate.SQL: DEBUG
+#    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+devtools:
+  livereload:
+    enabled: true # 정적파일들의 실시간 갱신
 

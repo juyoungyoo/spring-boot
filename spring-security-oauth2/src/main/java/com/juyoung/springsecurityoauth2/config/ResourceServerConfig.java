@@ -2,11 +2,10 @@ package com.juyoung.springsecurityoauth2.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
-import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfiguration;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
 
 @Configuration
 @EnableResourceServer   // 인증을 하는 애
@@ -25,11 +24,11 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
-           .anonymous().disable()
-           .authorizeRequests()
-               .antMatchers("/users/**").authenticated()
-               .and()
-           .exceptionHandling()
-               .accessDeniedHandler(new OAuth2AccessDeniedHandler());
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                    .and()
+//                .requestMatchers().antMatchers("/users", "/oauth/users/**", "/oauth/clients/**", "/me")
+//                    .and()
+                    .authorizeRequests()
+                .antMatchers("/users/**").authenticated();
     }
 }

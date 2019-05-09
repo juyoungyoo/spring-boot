@@ -1,5 +1,9 @@
 package com.juyoung.springsecurityoauth2.config;
 
+import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,8 +16,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter;
+import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -38,6 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new InMemoryTokenStore();
     }
 
+    /* 인증 방식 */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService)
@@ -50,17 +60,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-    // reesouces 이외의 음....한다
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+//                    .headers().frameOptions().sameOrigin()
         http
-                .cors()
-                    .and()
-                .csrf()     // 항상 내가 토큰값을 줘야하는ㄷㅔ .. 별로..
-                    .disable()
-                .anonymous().disable()
                 .authorizeRequests()
-                    .antMatchers("/api-docs/**").permitAll();
+                    .antMatchers("/users/**").authenticated()
+                    .antMatchers("/employee/**").authenticated()
+                .and()
+                .formLogin()
+                    .loginPage("/session/new")
+                    .loginProcessingUrl("/session")
+                    .defaultSuccessUrl("/users/user")
+                .and()
+                    .csrf().disable();
     }
 
     @Bean
@@ -73,4 +86,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
+    class ClientResources {
+        @NestedConfigurationProperty
+        private AuthorizationCodeResourceDetails client = new AuthorizationCodeResourceDetails();
+        @NestedConfigurationProperty
+        private ResourceServerProperties resource = new ResourceServerProperties();
+        public AuthorizationCodeResourceDetails getClient() {
+            return client;
+        }
+        public ResourceServerProperties getResource() {
+            return resource;
+        }
+    }
+
 }
