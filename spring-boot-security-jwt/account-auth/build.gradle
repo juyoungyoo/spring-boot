@@ -12,6 +12,9 @@ dependencies {
     
     // https://mvnrepository.com/artifact/com.auth0/java-jwt
     compile group: 'com.auth0', name: 'java-jwt', version: '3.3.0'
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
+
 
     runtime('org.springframework.boot:spring-boot-devtools') // hot reload
     compile 'org.projectlombok:lombok'

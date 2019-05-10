@@ -1,5 +1,6 @@
 package com.security.auth.config;
 
+import com.security.auth.config.jwt.CustomAccessTokenConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,5 +38,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(ResourceServerSecurityConfigurer config) {
         config.tokenServices(tokenServices);
     }
+
 }
 

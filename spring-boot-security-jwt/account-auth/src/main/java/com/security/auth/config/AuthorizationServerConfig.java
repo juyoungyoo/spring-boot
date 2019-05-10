@@ -1,5 +1,6 @@
 package com.security.auth.config;
 
+import com.security.auth.config.jwt.CustomTokenEnhancer;
 import com.security.auth.security.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,9 +14,10 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.token.AccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
-import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.*;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableAuthorizationServer
@@ -24,17 +26,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private TokenStore tokenStore;  // todo : token 저장소 ( default : inMemory > DB )
     @Autowired
-    private AccessTokenConverter accessTokenConverter;
+    private JwtAccessTokenConverter accessTokenConverter;
 
     @Autowired
     private AuthenticationManager authenticationManager;    // 핵심 : 인증 처리
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-//    @Autowired
-//    private AccountService accountService;
-    @Autowired
-    private UserDetailsService userDetailsService;
 
 
     @Override
@@ -54,10 +52,17 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
+        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(tokenEnhancer(), accessTokenConverter));
+
         endpoints.tokenStore(tokenStore)
-//                .userDetailsService(accountService)
-                .accessTokenConverter(accessTokenConverter)
+                .tokenEnhancer(tokenEnhancerChain)
                 .authenticationManager(authenticationManager);
+    }
+
+    @Bean
+    public TokenEnhancer tokenEnhancer() {
+        return new CustomTokenEnhancer();
     }
 
     @Override

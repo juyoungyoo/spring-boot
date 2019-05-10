@@ -1,5 +1,6 @@
 package com.security.auth.config;
 
+import com.security.auth.config.jwt.CustomAccessTokenConverter;
 import com.security.auth.security.AccountService;
 import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,10 +38,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
-//    private AccountService accountService;
     @Autowired
-    private DataSource dataSource;
-
+    private CustomAccessTokenConverter customAccessTokenConverter;
 
     @Bean
     @Override
@@ -56,7 +55,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setSigningKey("123");
+//        converter.setSigningKey("123");
+        converter.setAccessTokenConverter(customAccessTokenConverter);
         return converter;
     }
 
