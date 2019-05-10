@@ -1,0 +1,13 @@
+server:
+  port: 8081
+
+security:
+  oauth2:
+    client:
+      client-id: myApp
+      client-secret: pass
+
+devtools:
+  livereload:
+    enabled: true # 정적파일들의 실시간 갱신
+

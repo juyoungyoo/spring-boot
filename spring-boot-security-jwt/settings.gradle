@@ -1,0 +1,3 @@
+rootProject.name = 'spring-boot-security-jwt'
+
+include 'account-api', 'account-auth'

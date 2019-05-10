@@ -1,10 +1,16 @@
-package com.juyoung.springsecurityoauth2.config;
+package com.security.auth.config;
 
+import com.security.auth.security.AccountService;
+import net.bytebuddy.asm.Advice;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,33 +18,39 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import javax.annotation.Resource;
+import javax.sql.DataSource;
 import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Resource(name = "userService")
+    @Autowired
     private UserDetailsService userDetailsService;
+//    private AccountService accountService;
+    @Autowired
+    private DataSource dataSource;
 
     @Bean
     @Override
     protected AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
     }
+
     @Bean
-    public TokenStore tokenStore(){
-        return new InMemoryTokenStore();
+    public TokenStore tokenStore() {
+        return new JdbcTokenStore(dataSource);
     }
 
     /* 인증 방식 */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.userDetailsService(accountService)
         auth.userDetailsService(userDetailsService)
                 .passwordEncoder(encoder());
     }
@@ -49,30 +61,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-
-
-
+    @Override
+    public void configure(WebSecurity web) {
+        web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+        web.ignoring().antMatchers("/h2-console/**");
+    }
+/*
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests()
-                    .anyRequest().authenticated()
-                .and()
-                    .formLogin()
+                .antMatcher("/")
+                .authorizeRequests().antMatchers("/login**").permitAll()
                     .and()
-                .authorizeRequests().anyRequest().authenticated();
-//        http
-//                .cors()
-//                    .and()
-//                .csrf()     // 항상 내가 토큰값을 줘야하는ㄷㅔ .. 별로..
-//                    .disable()
-//                .anonymous().disable()
-//                .authorizeRequests()
-//                    .antMatchers("/api-docs/**").permitAll();
-    }
+                .formLogin()
+                    .and()
+                .authorizeRequests()
+                    .mvcMatchers(HttpMethod.GET,"/api/**").authenticated()
+                    .anyRequest().authenticated();
+    }*/
 
+/*
     @Bean
-    public CorsConfigurationSource corsConfigurationSource(){
+    public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("*"));
@@ -80,5 +90,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
-    }
+    }*/
 }
+
