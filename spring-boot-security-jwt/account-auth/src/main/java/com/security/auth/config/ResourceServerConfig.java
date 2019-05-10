@@ -1,3 +1,4 @@
+/*
 package com.security.auth.config;
 
 import com.security.auth.config.jwt.CustomAccessTokenConverter;
@@ -41,3 +42,4 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
 }
 
+*/

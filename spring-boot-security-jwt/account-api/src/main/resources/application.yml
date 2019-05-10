@@ -1,11 +1,5 @@
 server:
-  port: 8081
-
-security:
-  oauth2:
-    client:
-      client-id: myApp
-      client-secret: pass
+  port: 8080
 
 devtools:
   livereload:
