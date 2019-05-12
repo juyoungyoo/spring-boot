@@ -18,6 +18,8 @@ HELP.md
 *.iml
 *.ipr
 /out/
+account-api/out/**
+account-auth/out/**
 
 ### NetBeans ###
 /nbproject/private/
@@ -32,4 +34,4 @@ HELP.md
 ### 인증정보 제외
 /src/main/resources/google.yml
 /.idea/
-/.idea
+.idea
