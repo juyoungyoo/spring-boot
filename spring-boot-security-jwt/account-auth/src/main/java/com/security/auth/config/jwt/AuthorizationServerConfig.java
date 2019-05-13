@@ -1,6 +1,6 @@
-package com.security.auth.config;
+package com.security.auth.config.jwt;
 
-import com.security.auth.config.jwt.CustomTokenEnhancer;
+import com.security.auth.config.jwt.customJwt.CustomTokenEnhancer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,12 +38,24 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public void configure(ClientDetailsServiceConfigurer configurer) throws Exception {
         configurer
                 .inMemory()
-                .withClient("juyoung-client")
-                .secret(passwordEncoder.encode("juyoung-password"))     // app client id, secret  // 패스워드 자동 생성
-                .authorizedGrantTypes("password",
-//                        "authorization_code",
-                        "refresh_token")
-                .scopes("read", "write", "trust")
+                    .withClient("juyoung-client")
+                    .secret(passwordEncoder.encode("juyoung-password"))     // app client id, secret
+                    .authorizedGrantTypes("password",
+    //                        "authorization_code",
+                            "refresh_token")
+                    .scopes("read", "write", "trust")
+                .and()
+                    .withClient("my-client-with-registered-redirect")
+                    .authorizedGrantTypes("authorization_code")
+                    .authorities("ROLE_CLIENT")
+                    .scopes("read", "trust")
+                    .resourceIds("oauth2-resource")
+                    .redirectUris("http://anywhere?key=value")
+                .and()
+                .withClient("foo")
+                    .secret(passwordEncoder.encode("secret"))
+                    .authorizedGrantTypes("refresh_token","password")
+                    .scopes("read")
                 .accessTokenValiditySeconds(1*60*60)
                 .refreshTokenValiditySeconds(6*60*60);
     }
@@ -65,6 +77,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+        security.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
         security.passwordEncoder(passwordEncoder);
     }
 }

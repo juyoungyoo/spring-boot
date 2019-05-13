@@ -2,7 +2,7 @@ package com.security.auth.security;
 
 
 import com.security.auth.domain.Account;
-import com.security.auth.repository.UserRepository;
+import com.security.auth.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,26 +21,22 @@ import java.util.List;
 public class AccountService implements UserDetailsService {
 
     @Autowired
-    private UserRepository userRepository;
+    private AccountRepository accountRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     public List<Account> findAll() {
-        return userRepository.findAll();
+        return accountRepository.findAll();
     }
 
     public Account save(Account account) {
         account.setPassword(passwordEncoder.encode(account.getPassword()));
-        return userRepository.save(account);
-    }
-
-    public void delete(Long id) {
-        userRepository.deleteById(id);
+        return accountRepository.save(account);
     }
 
     @PostConstruct
     public void init(){
-        Account juyoung = userRepository.findByUsername("juyoung");
+        Account juyoung = accountRepository.findByUsername("juyoung");
         if(juyoung == null){
             Account account = new Account();
             account.setUsername("juyoung");
@@ -52,11 +48,15 @@ public class AccountService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Account account = userRepository.findByUsername(username);
+        Account account = accountRepository.findByUsername(username);
         return new org.springframework.security.core.userdetails.User(account.getUsername(), account.getPassword(),getAuthorities());
     }
 
     private Collection<? extends GrantedAuthority> getAuthorities() {
         return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    public Account search(String username) {
+        return accountRepository.findAllByUsername(username).orElseThrow(()->new IllegalArgumentException("존재하지 않는 계정입니다.(" + username + ")"));
     }
 }

@@ -5,3 +5,10 @@ devtools:
   livereload:
     enabled: true # 정적파일들의 실시간 갱신
 
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/toy?useUnicode=true&characterEncoding=utf8&useSSL=true
+    username: juyoung
+    password: pass

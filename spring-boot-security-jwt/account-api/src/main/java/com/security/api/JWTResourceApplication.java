@@ -21,12 +21,12 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 import java.io.IOException;
 
-@SpringBootApplication
-@EnableResourceServer
-public class ResourceApplication {
-    public static void main(String[] args){
-        SpringApplication.run(ResourceApplication.class);
-    }
+//@SpringBootApplication
+//@EnableResourceServer
+public class JWTResourceApplication {
+//    public static void main(String[] args){
+//        SpringApplication.run(JWTResourceApplication.class);
+//    }
 
     @Configuration
     class resourceServer extends ResourceServerConfigurerAdapter {

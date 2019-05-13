@@ -2,14 +2,16 @@ package com.security.auth.domain;
 
 import lombok.Data;
 
-import javax.persistence.*;
-import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
-@Entity
 @Data
+@Entity
 public class Account {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
     private String username;
     private String password;

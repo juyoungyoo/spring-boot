@@ -42,8 +42,23 @@ public class AuthorizationServerConfigTest {
                 .and().with().params(params)
                 .when().post("http://localhost:8081/oauth/token")
                 ;
-
         return response.jsonPath().getString("access_token");
     }
+
+    /*private String obtainAccessToken(String username, String password) {
+
+        Map<String, String> params = new HashMap<>();
+        params.put("grant_type", "password");
+        params.put("username", username);
+        params.put("password", password);
+
+        Response response = RestAssured.given()
+                .auth().preemptive().basic("juyoung-client","juyoung-password")
+                .and().with().params(params)
+                .when().post("http://localhost:8081/oauth/token")
+                ;
+
+        return response.jsonPath().getString("access_token");
+    }*/
 
 }

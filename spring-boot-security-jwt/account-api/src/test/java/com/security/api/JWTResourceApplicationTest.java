@@ -16,8 +16,8 @@ import java.util.Map;
 import static junit.framework.TestCase.assertTrue;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = ResourceApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ResourceApplicationTest {
+@SpringBootTest(classes = RESTResourceApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+public class JWTResourceApplicationTest {
 
     @Autowired
     private JwtTokenStore tokenStore;

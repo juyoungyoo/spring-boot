@@ -12,7 +12,7 @@ import static org.hamcrest.Matchers.containsString;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class ApplicationTest {
+public class AuthApplicationTest {
 
     @Before
     public void setup() {

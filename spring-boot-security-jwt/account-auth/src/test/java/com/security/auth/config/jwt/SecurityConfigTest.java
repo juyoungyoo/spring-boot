@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.oauth2.common.util.Jackson2JsonParser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,26 +51,52 @@ public class SecurityConfigTest {
 
     @Test
     public void resource_Server_Connected_Success() throws Exception {
-        mockmvc.perform(get("/api/users")
+        mockmvc.perform(get("/account/all")
                         .header(HttpHeaders.AUTHORIZATION, getBearerToken()))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
 
-    private String getBearerToken() {
-        return "bearer" + obtainAccessToken();
+    @Test
+    public void resource_Server_Is_Unauthorized() throws Exception {
+        mockmvc.perform(get("/account/all"))
+                .andDo(print())
+                .andExpect(status().isUnauthorized());
     }
 
-    private String obtainAccessToken() {
+    private String getBearerToken() throws Exception {
+        return "bearer " + obtainAccessToken();
+    }
+
+    private String obtainAccessToken2() {
         Map<String, String> params = new HashMap<>();
         params.put("grant_type", "password");
         params.put("username", "juyoung");
         params.put("password", "pass");
 
-        Response response = RestAssured.given().auth().preemptive().basic("juyoung-client", "juyoung-password")
-                .with().params(params)
-                .when().post("/oauth/token");
+        Response response = RestAssured.given()
+                .auth().preemptive().basic("juyoung-client","juyoung-password")
+                .and().with().params(params)
+                .when().post("http://localhost:8081/oauth/token")
+                ;
         return response.jsonPath().getString("access_token");
+    }
+
+    private String obtainAccessToken() throws Exception {
+        Map<String, String> params = new HashMap<>();
+        params.put("grant_type", "password");
+        params.put("username", "juyoung");
+        params.put("password", "pass");
+
+        ResultActions perform = mockmvc.perform(post("/oauth/token")
+                .with(httpBasic("juyoung-client", "juyoung-password"))
+                .param("username", "juyoung")
+                .param("password", "pass")
+                .param("grant_type", "password"));
+
+        String response = perform.andReturn().getResponse().getContentAsString();
+        Jackson2JsonParser parser = new Jackson2JsonParser();
+        return parser.parseMap(response).get("access_token").toString();
     }
 }
 

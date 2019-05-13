@@ -1,6 +1,5 @@
-package com.security.auth.config.jwt;
+package com.security.auth.config.jwt.customJwt;
 
-import net.bytebuddy.utility.RandomString;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
