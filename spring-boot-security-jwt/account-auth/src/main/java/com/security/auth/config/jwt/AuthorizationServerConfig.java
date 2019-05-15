@@ -1,3 +1,4 @@
+/*
 package com.security.auth.config.jwt;
 
 import com.security.auth.config.jwt.customJwt.CustomTokenEnhancer;
@@ -24,6 +25,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Autowired
     private TokenStore tokenStore;  // todo : token 저장소 ( default : inMemory > DB )
+
     @Autowired
     private JwtAccessTokenConverter accessTokenConverter;
 
@@ -44,13 +46,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     //                        "authorization_code",
                             "refresh_token")
                     .scopes("read", "write", "trust")
-                .and()
-                    .withClient("my-client-with-registered-redirect")
-                    .authorizedGrantTypes("authorization_code")
-                    .authorities("ROLE_CLIENT")
-                    .scopes("read", "trust")
-                    .resourceIds("oauth2-resource")
-                    .redirectUris("http://anywhere?key=value")
                 .and()
                 .withClient("foo")
                     .secret(passwordEncoder.encode("secret"))
@@ -81,3 +76,4 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         security.passwordEncoder(passwordEncoder);
     }
 }
+*/
