@@ -12,7 +12,7 @@ buildscript {
 }
 
 subprojects {
-    group 'com.security'
+    group 'com.service'
     version '1.0'
 
     apply plugin: 'java'
