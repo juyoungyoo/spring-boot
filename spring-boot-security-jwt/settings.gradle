@@ -1,3 +1,4 @@
 rootProject.name = 'spring-boot-security-jwt'
 
 include 'account-resource', 'account-auth', 'web'
+include 'zuul-gateway'

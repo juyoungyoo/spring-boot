@@ -13,9 +13,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     
-    // https://mvnrepository.com/artifact/com.auth0/java-jwt
-
-    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
     compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.1.5.RELEASE'
 
