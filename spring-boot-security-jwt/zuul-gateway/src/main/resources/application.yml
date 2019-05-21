@@ -1,0 +1,17 @@
+server:
+  port: 8080
+zuul:
+  sensitiveHeaders: Cookie,Set-Cookie
+  routes:
+    spring-security-oauth-resource:
+      path: /account/**
+      url: http://localhost:8082/account
+    oauth:
+      path: /oauth/**
+      url: http://localhost:8081/auth/oauth
+
+security:
+  oauth2:
+    resource:
+      jwt:
+        key-value: 123
