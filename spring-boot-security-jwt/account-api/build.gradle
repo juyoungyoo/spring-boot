@@ -24,6 +24,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
 
     compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.springframework.boot:spring-boot-starter-security')
     compile group: 'org.springframework.security.oauth.boot', name: 'spring-security-oauth2-autoconfigure', version: '2.1.4.RELEASE'
     testImplementation 'org.springframework.security:spring-security-test'
 

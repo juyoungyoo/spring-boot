@@ -1,33 +1,23 @@
 package com.security.auth.controller;
 
-
 import com.security.auth.domain.Account;
-import com.security.auth.security.AccountService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.security.auth.repository.AccountRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
+@RequestMapping(value = "/users")
 @RestController
+@RequiredArgsConstructor
 public class AccountController {
 
-    @Autowired
-    AccountService accountService;
+    private final AccountRepository accountRepository;
 
-    @GetMapping(value = "/account/all")
-    public String getAccounts(){
-        return "success";
-    }
-
-    @GetMapping("/account")
-    public Account getAccount(@RequestParam String username) {
-        return accountService.search(username);
-    }
-
-    @PostMapping("/account")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void postMessage(@RequestBody Account account) {
-        accountService.save(account);
+    @GetMapping("/{id}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public Account getAccount(@PathVariable final long id) {
+        Account account = accountRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("No Account"));
+        return account;
     }
 }

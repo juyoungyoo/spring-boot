@@ -29,7 +29,7 @@ public class ResourceServerIntegrationTest {
     public void givenUser_When_Use_FooClient_then_Ok_For_FooResource_Only() {
 
 
-        final String accessToken = obtainAccessToken("fooClientIdPassword", "john", "123");
+        final String accessToken = obtainAccessToken("foo", "juyoung", "secret");
 
         final Response fooResponse = RestAssured.given()
                                     .header("Authorization", "Bearer " + accessToken)

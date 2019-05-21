@@ -1,3 +1,4 @@
+/*
 package com.security.api;
 
 import org.springframework.context.annotation.Bean;
@@ -19,15 +20,20 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-        resources.resourceId("fooClientIdPassword").stateless(false);
+        resources.resourceId("foo");
     }
 
     @Override
     public void configure(final HttpSecurity http) throws Exception {
         // @formatter:off
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                .and()
-                .authorizeRequests().anyRequest().permitAll();
+//        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+//                .and()
+                http
+                        .authorizeRequests()
+                            .anyRequest().authenticated();
+//                        .and()
+//                        .oauth2ResourceServer()
+//                            .jwt();
         // @formatter:on
     }
 
@@ -37,10 +43,11 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
         RemoteTokenServices tokenService = new RemoteTokenServices();
         tokenService.setCheckTokenEndpointUrl(
                 "http://localhost:8081/oauth/check_token");
-        tokenService.setClientId("fooClientIdPassword");
+        tokenService.setClientId("foo");
         tokenService.setClientSecret("secret");
         return tokenService;
     }
 
 
 }
+*/

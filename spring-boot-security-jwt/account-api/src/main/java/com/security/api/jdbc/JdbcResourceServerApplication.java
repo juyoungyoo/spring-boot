@@ -1,3 +1,4 @@
+/*
 package com.security.api.jdbc;
 
 
@@ -20,8 +21,8 @@ import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
 import javax.sql.DataSource;
 
-@SpringBootApplication
-@EnableResourceServer
+//@SpringBootApplication
+//@EnableResourceServer
 public class JdbcResourceServerApplication {
 
     public static void main(String[] args){
@@ -79,3 +80,4 @@ public class JdbcResourceServerApplication {
     }
 
 }
+*/

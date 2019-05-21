@@ -1,5 +1,9 @@
 package com.security.api.foo;
 
+import lombok.Data;
+import lombok.Getter;
+
+@Data
 public class Foo {
 
     private long id;

@@ -14,10 +14,10 @@ import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 @Controller
 public class FooController {
 
-    @PreAuthorize("#oauth2.hasScope('read')")
-    @RequestMapping(method = RequestMethod.GET, value = "/foo/{id}")
+//    @PreAuthorize("#oauth2.hasScope('read')")
+    @RequestMapping(method = RequestMethod.GET, value = "/foo")
     @ResponseBody
-    public Foo findById(@PathVariable long id) {
+    public Foo findById() {
         return new Foo(Long.parseLong(randomNumeric(2)), randomAlphabetic(4));
     }
 }

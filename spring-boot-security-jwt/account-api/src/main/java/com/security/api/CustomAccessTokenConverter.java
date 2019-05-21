@@ -1,3 +1,4 @@
+/*
 package com.security.api;
 
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -7,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 // To Resources server
-@Component
+//@Component
 public class CustomAccessTokenConverter extends DefaultAccessTokenConverter {
 
     @Override
@@ -18,3 +19,4 @@ public class CustomAccessTokenConverter extends DefaultAccessTokenConverter {
         return authentication;
     }
 }
+*/

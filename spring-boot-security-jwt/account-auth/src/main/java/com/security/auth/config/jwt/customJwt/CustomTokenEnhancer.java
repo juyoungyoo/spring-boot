@@ -1,3 +1,4 @@
+/*
 package com.security.auth.config.jwt.customJwt;
 
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
@@ -22,3 +23,4 @@ public class CustomTokenEnhancer implements TokenEnhancer {
             return accessToken;
     }
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package com.security.api;
 
 import org.apache.commons.io.IOUtils;
@@ -28,7 +29,7 @@ public class JWTResourceApplication {
 //        SpringApplication.run(JWTResourceApplication.class);
 //    }
 
-    @Configuration
+//    @Configuration
     class resourceServer extends ResourceServerConfigurerAdapter {
 
         @Autowired
@@ -80,3 +81,4 @@ public class JWTResourceApplication {
         }
     }
 }
+*/

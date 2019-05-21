@@ -1,3 +1,4 @@
+/*
 package com.security.auth.config.jwt.customJwt;
 
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -18,3 +19,4 @@ public class CustomAccessTokenConverter extends DefaultAccessTokenConverter {
         return authentication;
     }
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package com.security.auth.config.rest;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -49,3 +50,4 @@ public class DataSourceConfig {
         return dataSource;
     }
 }
+*/

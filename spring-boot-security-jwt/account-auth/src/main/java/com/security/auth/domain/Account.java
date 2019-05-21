@@ -1,51 +1,62 @@
 package com.security.auth.domain;
 
-import lombok.Data;
+import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import java.time.LocalDateTime;
+import java.util.Set;
 
-@Data
 @Entity
-public class Account {
+@Getter
+@EqualsAndHashCode(of = {"id"})
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class
+Account {
 
     @Id
-    @GeneratedValue
-    private Long id;
-    private String username;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    @Column(nullable = false)
+    private String name;
+    @Column(nullable = false)
     private String password;
+    @Email
+    @Column(unique = true, nullable = false)
+    private String email;
+    @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    private RoleType roleType;
+    private boolean emailVerified;
+    private boolean state;
+    private String providerId;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(value = EnumType.STRING)
+    private Set<AuthProvider> provider;
 
-    public Long getId() {
-        return id;
-    }
+    @CreatedDate
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
+    @LastModifiedDate
+    @Column(name = "update_at", updatable = false)
+    private LocalDateTime updateAt;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
+    @Builder
+    public Account(String name,
+                   String password,
+                   String email,
+                   RoleType roleType,
+                   boolean emailVerified,
+                   Set<AuthProvider> provider,
+                   boolean state) {
+        this.name = name;
         this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "Account{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+        this.email = email;
+        this.roleType = roleType;
+        this.emailVerified = emailVerified;
+        this.provider = provider;
+        this.state = state;
     }
 }
