@@ -53,10 +53,6 @@ public class SecurityConfigTest {
         ;
     }
 
-
-
-
-
     @Test
     public void verify_conneced_access_token() throws Exception {
         mockmvc.perform(get("/account/all")
