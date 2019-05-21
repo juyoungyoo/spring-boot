@@ -15,7 +15,6 @@ dependencies {
     
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
 
-    compile 'commons-io:commons-io'
     compile 'org.projectlombok:lombok'
     compile 'com.h2database:h2'
     compile 'mysql:mysql-connector-java:8.0.13'
