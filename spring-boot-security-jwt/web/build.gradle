@@ -1,0 +1,22 @@
+bootJar{
+    enabled = false
+}
+jar {
+    enabled = true
+}
+
+dependencies {
+    annotationProcessor 'org.projectlombok:lombok'
+    compile 'org.springframework.boot:spring-boot-starter-security'
+    compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.1.5.RELEASE'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.security:spring-security-oauth2-client'
+
+    implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
+    implementation('org.thymeleaf.extras:thymeleaf-extras-springsecurity5')
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testCompile('io.rest-assured:rest-assured:3.0.3') // Rest API Test
+}
+//implementation 'org.springframework.security:spring-security-oauth2-jose'
