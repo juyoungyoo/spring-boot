@@ -1,7 +1,7 @@
 server:
-  port: 8081
-  servlet:
-    context-path: /auth
+  port: 8080
+#  servlet:
+#    context-path: /auth
 
 spring:
   datasource:
@@ -10,6 +10,7 @@ spring:
     username: juyoung
     password: pass
   #    initialization-mode: always
+
   h2:
     console:
       enabled: true
@@ -24,21 +25,11 @@ spring:
 
 logging:
   level:
-    #    root: debug
-    org.springframework.security: debug
-    org.hibernate.SQL: debug
-    org.h2: debug
-    org.springframework.security.oauth2.jwt: debug
-
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            clientId: 434541373271-h977ssvpjlv003tdkfof6f49pqg8fsqr.apps.googleusercontent.com
-            clientSecret: d9k1lSwtPwrfHBtpwrp-fTac
-            scope: email, profile
-            redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
+     root: debug
+#    org.springframework.security: debug
+#    org.hibernate.SQL: debug
+#    org.h2: debug
+#    org.springframework.security.oauth2.jwt: debug
 
 app:
   auth:
@@ -49,4 +40,4 @@ app:
 #     we'll be generating an auth token for the user and sending the token to the
 #     redirectUri mentioned by the frontend client in the /oauth2/authorize request.
 #     We're not using cookies because they won't work well in mobile clients.
-    authorizedRedirectUris: http://localhost:8080/oauth2/redirect
+#    authorizedRedirectUris: http://localhost:8080/oauth2/redirect
