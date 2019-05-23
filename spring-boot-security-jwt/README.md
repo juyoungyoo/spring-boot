@@ -1,3 +1,13 @@
+# Spring security5 + OAuth2 + Spring zuul gateway
+- account-auth : authentication server (port: 8081)
+- account-resource : resource server (port: 8082)
+- zuul-gateway : api gateway (port: 8080)
+- web : front server (port: 8083)
+ 
+- [ ] authorization_code grant 토큰 발급
+- [ ] userDetailService 연결
+- [ ] tokenStore 
+
 ## Obtaining an Access Token
 ```
 curl -X POST \
