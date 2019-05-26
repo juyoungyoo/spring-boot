@@ -3,7 +3,7 @@ __[ 요구사항 ]__
 2. 로그인 : 로그인 성공 시 jwt token 발급하며 token을 redis에 저장한다
 이 후, 리소스 접근 시 토큰 인증을 한다.
 
-### 개발 환경
+__[ 개발 환경 ]__
 - spring embedded-redis 0.7 ( test )
 - spring data redis
 - spring data jpa
