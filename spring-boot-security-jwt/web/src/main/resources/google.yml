@@ -1,8 +1,8 @@
 google :
   client :
     clientId : 434541373271-h977ssvpjlv003tdkfof6f49pqg8fsqr.apps.googleusercontent.com
-    clientSecret: tiASAW2X2ERJ15ZAa4yN400E
-    accessTokenUri: https://accounts.google.com/o/oauth2/token
+    clientSecret: d9k1lSwtPwrfHBtpwrp-fTac
+    accessTokenUri: https://accounts.google.com/o//token
     userAuthorizationUri: https://accounts.google.com/o/oauth2/auth
     clientAuthenticationScheme: form
     scope: email, profile
