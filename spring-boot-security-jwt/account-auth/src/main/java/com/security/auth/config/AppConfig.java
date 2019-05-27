@@ -1,8 +1,9 @@
-package com.security.auth.security;
+package com.security.auth.config;
 
+import com.security.auth.common.AppProperties;
 import com.security.auth.domain.RoleType;
 import com.security.auth.model.SignUpRequest;
-import com.security.auth.service.CustomUserDetailsService;
+import com.security.auth.security.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -18,7 +19,7 @@ public class AppConfig {
     public PasswordEncoder passwordEncoder(){
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
-/*
+
     @Bean
     public ApplicationRunner applicationRunner(){
         return new ApplicationRunner() {
@@ -29,7 +30,7 @@ public class AppConfig {
 
             @Override
             public void run(ApplicationArguments args) throws Exception {
-                setFixtureAccount("admin", appProperties.getAdminId(), appProperties.getAdminPassword(), RoleType.MANAGER);
+                setFixtureAccount("admin", appProperties.getAdminId(), appProperties.getAdminPassword(), RoleType.ADMIN);
                 setFixtureAccount("user", appProperties.getUserId(), appProperties.getUserPassword(), RoleType.USER);
             }
 
@@ -51,5 +52,5 @@ public class AppConfig {
                 }
             }
         };
-    }*/
+    }
 }

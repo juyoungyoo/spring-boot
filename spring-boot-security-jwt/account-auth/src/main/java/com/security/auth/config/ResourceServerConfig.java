@@ -1,4 +1,4 @@
-package com.security.auth.security;
+package com.security.auth.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,7 +12,19 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/employee").hasRole("ADMIN");
-
+        http
+                .authorizeRequests()
+                .antMatchers("/employee")
+                .hasRole("ADMIN")
+                .anyRequest().authenticated()
+                .antMatchers("/login").permitAll()
+//                .antMatchers("/oauth/token/revokeById/**").permitAll()
+//                .antMatchers("/tokens/**").permitAll()
+                .and()
+                .formLogin()
+                .and()
+                .csrf().disable()
+                .httpBasic()
+        ;
     }
 }

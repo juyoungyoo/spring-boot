@@ -3,7 +3,10 @@ package com.security.auth.model;
 import com.security.auth.domain.Account;
 import com.security.auth.domain.AuthProvider;
 import com.security.auth.domain.RoleType;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.EnumType;
@@ -13,7 +16,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SignUpRequest {
 
@@ -40,9 +42,9 @@ public class SignUpRequest {
         this.emailVerified = emailVerified;
     }
 
-//    public void encodePassword(PasswordEncoder passwordEncoder){
-//       password = passwordEncoder.encode(password);
-//    }
+    public void encodePassword(PasswordEncoder passwordEncoder) {
+        password = passwordEncoder.encode(password);
+    }
 
     public Account toEntity() {
         return Account.builder()

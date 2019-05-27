@@ -1,8 +1,9 @@
-package com.security.auth.security;
+package com.security.auth.config;
 
-import com.security.auth.service.CustomUserDetailsService;
+import com.security.auth.common.AppProperties;
+import com.security.auth.security.CustomTokenEnhancer;
+import com.security.auth.security.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -28,15 +29,12 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
     AppProperties appProperties;
-
     @Autowired
-    @Qualifier("authenticationManagerBean")
     AuthenticationManager authenticationManager;
     @Autowired
     CustomUserDetailsService customUserDetailsService;
     @Autowired
     PasswordEncoder passwordEncoder;
-
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
@@ -50,17 +48,17 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         // client 설정
         clients.inMemory()
-                .withClient("myApp")
+                .withClient(appProperties.getClientId())
+                .secret(passwordEncoder.encode(appProperties.getClientSecret()))
                 .authorizedGrantTypes("password", "refresh_token")
                 .scopes("read","write")
-                .secret(passwordEncoder.encode("secret"))
                 .accessTokenValiditySeconds(10 * 60) // 10 min
                 .refreshTokenValiditySeconds(6 * 10 * 60)
                 .redirectUris("")
         .and()
                 .withClient("fooClientIdPassword")
                 .secret(passwordEncoder.encode("secret"))
-                .authorizedGrantTypes("password", "authorization_code", "refresh_token", "client_credentials")
+                .authorizedGrantTypes("password", "authorization_code", "refresh_token")
                 .accessTokenValiditySeconds(3600)       // 1 hour
                 .refreshTokenValiditySeconds(2592000)  // 30 days
                 .redirectUris("http://www.example.com","http://localhost:8089/","http://localhost:8080/login/oauth2/code/custom","http://localhost:8080/ui-thymeleaf/login/oauth2/code/custom", "http://localhost:8080/authorize/oauth2/code/bael", "http://localhost:8080/login/oauth2/code/bael")
@@ -80,8 +78,12 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
     public void configure(final AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         final TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
         tokenEnhancerChain.setTokenEnhancers(Arrays.asList(tokenEnhancer(), accessTokenConverter()));
-        endpoints.tokenStore(tokenStore()).tokenEnhancer(tokenEnhancerChain).authenticationManager(authenticationManager);
-        //.userDetailsService(customUserDetailsService)
+        endpoints
+                .tokenStore(tokenStore())
+                .tokenEnhancer(tokenEnhancerChain)
+                .authenticationManager(authenticationManager)
+                .userDetailsService(customUserDetailsService)
+        ;
     }
 
     @Bean
