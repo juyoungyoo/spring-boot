@@ -5,7 +5,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +13,6 @@ import java.util.Optional;
 public class EmployeeController {
 
     private List<Employee> employees = new ArrayList<>();
-
 
     @GetMapping("/employee")
     @ResponseBody
@@ -28,9 +26,5 @@ public class EmployeeController {
         employees.add(employee);
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public Principal home(Principal principal) {
-        return principal;
-    }
+
 }

@@ -1,5 +1,8 @@
 package com.security.auth.security;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.security.auth.common.AppProperties;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,15 +14,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @RunWith(SpringRunner.class)
@@ -29,18 +29,28 @@ public class SecurityConfigTest {
 
     @Autowired
     MockMvc mockmvc;
+    @Autowired
+    AppProperties appProperties;
+    @Autowired
+    ObjectMapper objectMapper;
 
     private String CLIENT_ID = "myApp";
-    private String CLIENT_SECRET = "secret";
+    private String CLIENT_SECRET = "password";
     private String USER_NAME = "john";
     private String USER_PASSWORD = "123";
+
+    @Before
+    public void setUp() throws Exception {
+        CLIENT_ID = appProperties.getClientId();
+        CLIENT_SECRET = appProperties.getClientId();
+    }
 
     @Test
     public void create_Token_Success() throws Exception {
         mockmvc.perform(post("/oauth/token")
-                .with(httpBasic(CLIENT_ID, CLIENT_SECRET))
-                .param("username", USER_NAME)
-                .param("password", USER_PASSWORD)
+                .with(httpBasic(appProperties.getClientId(), appProperties.getClientSecret()))
+                .param("username", appProperties.getUserId())
+                .param("password", appProperties.getUserPassword())
                 .param("grant_type", "password")
         )
                 .andDo(print())
@@ -66,15 +76,10 @@ public class SecurityConfigTest {
     }
 
     private String obtainAccessToken() throws Exception {
-        Map<String, String> params = new HashMap<>();
-        params.put("grant_type", "password");
-        params.put("username", "juyoung");
-        params.put("password", "pass");
-
         ResultActions perform = mockmvc.perform(post("/oauth/token")
-                .with(httpBasic(CLIENT_ID, CLIENT_SECRET))
-                .param("username", "juyoung")
-                .param("password", "pass")
+                .with(httpBasic(appProperties.getClientId(), appProperties.getClientSecret()))
+                .param("username", appProperties.getUserId())
+                .param("password", appProperties.getUserPassword())
                 .param("grant_type", "password"));
 
         String response = perform.andReturn().getResponse().getContentAsString();

@@ -14,8 +14,6 @@ import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 
 // todo : not working :oauth/authorize
-// todo : not working : login page (auth bserver)
-// todo : auth server change customService
 public class AuthorizationCodeTest {
     public final static String AUTH_SERVER = "http://localhost:8081/auth";
     public final static String RESOURCE_SERVER = "http://localhost:8082/account";

@@ -12,6 +12,5 @@ public class AuthorizationServerApplicationTest {
 
     @Test
     public void whenLoadApplication_thenSuccess() {
-
     }
 }
