@@ -33,6 +33,11 @@ public class CustomUserDetailsService implements UserDetailsService {
         return accountRepository.save(signUpRequest.toEntity());
     }
 
+    public Account search(final long id) {
+        return accountRepository.findById(id)
+                .orElseThrow(() -> new AccountNotFoundException(id));
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Account account = accountRepository.findByEmail(username)

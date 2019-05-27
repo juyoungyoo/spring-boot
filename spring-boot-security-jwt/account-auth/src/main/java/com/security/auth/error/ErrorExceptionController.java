@@ -44,9 +44,9 @@ public class ErrorExceptionController {
     @ExceptionHandler(AccountNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     protected ErrorResponse handleAccountNotFoundException(AccountNotFoundException e) {
-        final ErrorCode accountNotFound = ErrorCode.ACCOUNT_NOT_FOUND;
-        log.error(accountNotFound.getMessage(), e.getId());
-        return buildError(accountNotFound);
+        final ErrorCode errorCode = ErrorCode.ACCOUNT_NOT_FOUND;
+        log.error(errorCode.getMessage(), e.getEmail() + e.getId());
+        return buildError(errorCode);
     }
 
     private List<ErrorResponse.FieldError> getFieldErrors(BindingResult bindingResult) {

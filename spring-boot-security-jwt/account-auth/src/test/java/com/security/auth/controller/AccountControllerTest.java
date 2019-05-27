@@ -96,25 +96,6 @@ public class AccountControllerTest {
                     .andExpect(status().isOk())
         ;
     }
-
-
-    public String getAccessToken() throws Exception {
-        ResultActions resultActions = mockMvc.perform(post("/oauth/token")
-                .with(httpBasic("juyoung-clienta", "juyoung-password"))
-                .param("username", "juyoung")
-                .param("password", "pass")
-                .param("grant_type", "password")
-        )
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("access_token").exists())
-                .andExpect(jsonPath("token_type").value("bearer"))
-                .andExpect(jsonPath("refresh_token").isNotEmpty())
-                .andExpect(jsonPath("scope").value("read write trust"));
-
-        String response = resultActions.andReturn().getResponse().getContentAsString();
-        Jackson2JsonParser parser = new Jackson2JsonParser();
-        return parser.parseMap(response).get("access_token").toString();
-    }*/
+*/
 
 }

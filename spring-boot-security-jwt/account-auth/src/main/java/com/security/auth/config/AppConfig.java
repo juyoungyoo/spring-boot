@@ -4,6 +4,7 @@ import com.security.auth.common.AppProperties;
 import com.security.auth.domain.RoleType;
 import com.security.auth.model.SignUpRequest;
 import com.security.auth.security.CustomUserDetailsService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class AppConfig {
 
@@ -50,6 +52,7 @@ public class AppConfig {
                 } catch (Exception e) {
                     customUserDetailsService.signUp(account);
                 }
+                log.info("init data success : " + account.getName());
             }
         };
     }
