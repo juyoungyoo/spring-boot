@@ -95,6 +95,19 @@ public class UserControllerTest {
         ;
     }
 
+    @Test
+    public void deleteUser() throws Exception {
+        long id = 1L;
+        mockMvc.perform(delete("/users/" + id)
+                .header(HttpHeaders.AUTHORIZATION, getBearer())
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isNoContent())
+        ;
+    }
+
+
     private String getBearer() {
         return "bearer " + obtainAccessToken();
     }

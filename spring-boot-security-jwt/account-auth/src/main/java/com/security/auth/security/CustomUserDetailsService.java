@@ -54,4 +54,10 @@ public class CustomUserDetailsService implements UserDetailsService {
         return UserPrincipal.of(account);
     }
 
+    public Account deleteAccount(long id) {
+        Account account = accountRepository.findById(id)
+                .orElseThrow(() -> new AccountNotFoundException(id));
+        account.deleteAccount();
+        return accountRepository.save(account);
+    }
 }

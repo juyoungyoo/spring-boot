@@ -29,4 +29,10 @@ public class UserController {
         return customUserDetailsService.updateMyAccount(id, accountUpdateRequest);
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAccount(@PathVariable final long id) {
+        customUserDetailsService.deleteAccount(id);
+    }
+
 }

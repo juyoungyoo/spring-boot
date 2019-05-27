@@ -64,4 +64,8 @@ Account {
     public void updateMyAccount(AccountUpdateRequest dto) {
         name = dto.getName();
     }
+
+    public void deleteAccount() {
+        state = false;
+    }
 }
