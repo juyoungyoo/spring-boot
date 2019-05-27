@@ -2,6 +2,7 @@ package com.security.auth.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.security.auth.common.AppProperties;
+import com.security.auth.model.AccountUpdateRequest;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,8 +20,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -46,7 +46,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void searchUserById_Success() throws Exception {
+    public void searchAccountById() throws Exception {
         long id = 1L;
         String email = appProperties.getAdminId();
 
@@ -60,17 +60,38 @@ public class UserControllerTest {
         ;
     }
 
+    // todo : principal 사용법
     @Test
-    public void updateUserInfo_Success() throws Exception {
+    public void getMyAccountIfo() throws Exception {
+        String expectedEmail = appProperties.getAdminId();
 
-
-        mockMvc.perform(get("/users")
+        mockMvc.perform(get("/users/me")
                 .header(HttpHeaders.AUTHORIZATION, getBearer())
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
+        ;
+    }
 
+    @Test
+    public void updateUserInfo() throws Exception {
+        long id = 1L;
+        String expectedName = "change the name";
+
+        AccountUpdateRequest accountUpdateRequest = AccountUpdateRequest.builder()
+                .name(expectedName)
+                .build();
+
+        mockMvc.perform(put("/users/" + id)
+                .header(HttpHeaders.AUTHORIZATION, getBearer())
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(accountUpdateRequest)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("id").value(id))
+                .andExpect(jsonPath("name").value(expectedName))
         ;
     }
 

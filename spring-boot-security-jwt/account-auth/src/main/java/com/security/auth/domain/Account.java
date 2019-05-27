@@ -1,5 +1,6 @@
 package com.security.auth.domain;
 
+import com.security.auth.model.AccountUpdateRequest;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -58,5 +59,9 @@ Account {
         this.emailVerified = emailVerified;
         this.provider = provider;
         this.state = state;
+    }
+
+    public void updateMyAccount(AccountUpdateRequest dto) {
+        name = dto.getName();
     }
 }

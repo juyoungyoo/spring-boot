@@ -27,7 +27,6 @@ public class UserPrincipal implements UserDetails {
 
     public static UserPrincipal of(Account account) {
         List<GrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_" + account.getRoleType().name()));
-
         return new UserPrincipal(
                 account.getId(),
                 account.getEmail(),
@@ -52,7 +51,6 @@ public class UserPrincipal implements UserDetails {
         this.authorities = authorities;
         this.state = state;
     }
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
