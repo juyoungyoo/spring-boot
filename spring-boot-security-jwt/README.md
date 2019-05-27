@@ -4,9 +4,15 @@
 - zuul-gateway : api gateway (port: 8080)
 - web : front server (port: 8083)
  
+ 
+## 요구사항 및 TODO
 - [ ] authorization_code grant 토큰 발급
-- [ ] userDetailService 연결
-- [ ] tokenStore 
+- [x] userDetailService 연결
+- [x] tokenStore
+- [x] 회원가입
+- [x] 계정 조회, 수정, 탈퇴 
+- [ ] 로그인 시 토큰 발급 및 token store 등록
+- [ ] 본인 계정정보 조회
 
 ## Obtaining an Access Token
 ```
