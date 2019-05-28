@@ -2,20 +2,16 @@ package com.security.auth.domain;
 
 import com.security.auth.model.AccountUpdateRequest;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
 @Getter
 @EqualsAndHashCode(of = {"id"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class
-Account {
+public class Account extends BaseAuditEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,13 +32,6 @@ Account {
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(value = EnumType.STRING)
     private Set<AuthProvider> provider;
-
-    @CreatedDate
-    @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt;
-    @LastModifiedDate
-    @Column(name = "update_at", updatable = false)
-    private LocalDateTime updateAt;
 
     @Builder
     public Account(String name,

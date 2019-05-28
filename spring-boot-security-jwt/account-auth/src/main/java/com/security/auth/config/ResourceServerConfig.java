@@ -7,7 +7,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 
 @Configuration
 @EnableResourceServer
-//@Profile("mvc")
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Override
