@@ -1,23 +1,24 @@
 package com.juyoung.res;
 
 
-import static org.junit.Assert.assertTrue;
-
 import com.juyoung.res.config.ResourceServerApplication;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ResourceServerApplication.class, webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -28,7 +29,9 @@ public class AuthenticationClaimsIntegrationTest {
 
     @Test
     public void whenTokenDontContainIssuer_thenSuccess() {
-        final String tokenValue = obtainAccessToken("myApp", "john", "123");
+        final String tokenValue = obtainAccessToken("myApp", "user@gmail.com", "123");
+
+        Collection<OAuth2AccessToken> myApp = tokenStore.findTokensByClientId("myApp");
         final OAuth2Authentication auth = tokenStore.readAuthentication(tokenValue);
         System.out.println(tokenValue);
         System.out.println(auth);
@@ -37,7 +40,6 @@ public class AuthenticationClaimsIntegrationTest {
 
         Map<String, Object> details = (Map<String, Object>) auth.getDetails();
         assertTrue(details.containsKey("organization"));
-        System.out.println(details.get("organization"));
     }
 
     private String obtainAccessToken(String clientId, String username, String password) {
@@ -49,11 +51,12 @@ public class AuthenticationClaimsIntegrationTest {
         final Response response = RestAssured
                 .given()
                     .auth().preemptive()
-                        .basic(clientId, "secret")
+                .basic(clientId, "password")
                     .and()
                 .with()
                     .params(params)
-                .when().post("http://localhost:8081/auth/oauth/token");
+                .when().post("http://localhost:8080/oauth/token");
+
         return response.jsonPath().getString("access_token");
     }
 

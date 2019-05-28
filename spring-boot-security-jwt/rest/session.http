@@ -22,4 +22,20 @@ Accept: application/json
 < session-sign-up.json
 
 ### 로그인
+POST http://localhost:8080/sign-in
+Content-Type: application/json
+Accept: application/json
 
+{
+  "email": "user@gmail.com",
+  "password": "123"
+}
+
+###
+GET http://localhost:8080/tokens
+
+###
+GET http://localhost:8080/oauth/check_token
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NTkwNzI4NzEsInVzZXJfbmFtZSI6InVzZXIiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwianRpIjoiNjgwNGE1ZmYtNDI5NC00NzM4LWIxYTctNjk3OTBmMjZhMTIwIiwiY2xpZW50X2lkIjoibXlBcHAiLCJzY29wZSI6WyJzY29wZSJdfQ.4XZE_o2pevNIvYz-JsufUmnJqYF4gcXYeDWwZ6lg95M
+
+###

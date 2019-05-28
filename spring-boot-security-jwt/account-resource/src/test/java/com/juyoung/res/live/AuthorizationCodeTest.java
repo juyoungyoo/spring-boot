@@ -2,6 +2,7 @@ package com.juyoung.res.live;
 
 
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.Test;
 import org.springframework.http.HttpHeaders;
@@ -15,12 +16,13 @@ import static org.junit.Assert.assertEquals;
 
 // todo : not working :oauth/authorize
 public class AuthorizationCodeTest {
-    public final static String AUTH_SERVER = "http://localhost:8081/auth";
+    //    public final static String AUTH_SERVER = "http://localhost:8081/auth";
+    public final static String AUTH_SERVER = "http://localhost:8080";
     public final static String RESOURCE_SERVER = "http://localhost:8082/account";
 
     @Test
     public void givenUser_whenUseFooClient_thenOkForFooResourceOnly() {
-        final String accessToken = obtainAccessTokenWithAuthorizationCode("fooClientIdPassword", "john", "123");
+        final String accessToken = obtainAccessTokenWithAuthorizationCode("fooClientIdPassword", "user@gmail.com", "123");
 
         final Response fooResponse = RestAssured.given().header("Authorization", "Bearer " + accessToken).get(RESOURCE_SERVER + "/foos/1");
         assertEquals(200, fooResponse.getStatusCode());
@@ -32,20 +34,20 @@ public class AuthorizationCodeTest {
 
     @Test
     public void obtainAccessToken_with_AuthorizationCode() {
-        final String redirectUrl = "http://www.example.com";
-        final String authorizeUrl = AUTH_SERVER + "/oauth/authorize?response_type=code&client_id=fooClientIdPassword&redirect_uri=" + redirectUrl;
+        final String redirectUrl = "http://localhost:8080/";
+        final String authorizeUrl = AUTH_SERVER + "/oauth/authorize?response_type=code&client_id=myApp&redirect_uri=" + redirectUrl;
         final String tokenUrl = AUTH_SERVER + "/oauth/token";
-        String username = "john";
+        String username = "user@gmail.com";
         String password = "123";
 
         RestAssured.given()
-                .formParams("username", username, "password", password)
+                .header("Accept", ContentType.JSON.getAcceptHeader())
+                .param("username", username)
+                .param("password", password)
                 .post(AUTH_SERVER + "/login")
                 .then()
                     .log().all()
-
         ;
-
     }
 
     private String obtainAccessTokenWithAuthorizationCode(String clientId, String username, String password) {
@@ -57,16 +59,21 @@ public class AuthorizationCodeTest {
         Response response = RestAssured.given()
                 .formParams("username", username, "password", password)
                 .post(AUTH_SERVER + "/login");
+
         final String cookieValue = response.getCookie("JSESSIONID");
 
         // get authorization code
         System.out.println(RestAssured.given().cookie("JSESSIONID", cookieValue).get(authorizeUrl).asString());
+
         Map<String, String> params = new HashMap<String, String>();
         params.put("user_oauth_approval", "true");
         params.put("authorize", "Authorize");
         params.put("scope.read", "true");
         params.put("scope.foo", "true");
-        response = RestAssured.given().cookie("JSESSIONID", cookieValue).formParams(params).post(authorizeUrl);
+        RestAssured.given()
+                .formParams(params)
+                .post(authorizeUrl).then().log().all()
+        ;
         assertEquals(HttpStatus.FOUND.value(), response.getStatusCode());
 
         final String location = response.getHeader(HttpHeaders.LOCATION);
@@ -79,7 +86,9 @@ public class AuthorizationCodeTest {
         params.put("client_id", clientId);
         params.put("redirect_uri", redirectUrl);
 
-        response = RestAssured.given().auth().basic(clientId, "secret").formParams(params).post(tokenUrl);
+        response = RestAssured.given().auth()
+                .basic(clientId, "secret")
+                .formParams(params).post(tokenUrl);
         return response.jsonPath().getString("access_token");
     }
 

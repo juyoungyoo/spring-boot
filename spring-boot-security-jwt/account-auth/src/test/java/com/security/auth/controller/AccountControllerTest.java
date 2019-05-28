@@ -3,6 +3,7 @@ package com.security.auth.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.security.auth.common.AppProperties;
 import com.security.auth.domain.RoleType;
+import com.security.auth.model.SignInRequest;
 import com.security.auth.model.SignUpRequest;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,6 +46,24 @@ public class AccountControllerTest {
     }
 
     @Test
+    public void signIn_Success() throws Exception {
+        SignInRequest signInRequest = SignInRequest.builder()
+                .email(appProperties.getUserId())
+                .password(appProperties.getUserPassword())
+                .build();
+
+        mockMvc.perform(post(
+                "/sign-in")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(signInRequest)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.access_token").exists())
+        ;
+    }
+
+    @Test
     public void signUp_success() throws Exception {
         String email = "juyoung@gmail.com";
         SignUpRequest signUpRequest = SignUpRequest.builder()
@@ -84,18 +103,5 @@ public class AccountControllerTest {
                 .andExpect(status().isBadRequest())
         ;
     }
-
-
-
-/*
-
-    @Test
-    public void get_인증_후_접근() throws Exception {
-        this.mockMvc.perform(get("/users").header(HttpHeaders.AUTHORIZATION,"bearer " + getAccessToken()))
-                    .andDo(print())
-                    .andExpect(status().isOk())
-        ;
-    }
-*/
 
 }

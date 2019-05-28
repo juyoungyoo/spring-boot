@@ -1,24 +1,22 @@
 package com.juyoung.res.live;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
-import org.springframework.http.MediaType;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class PasswordFlowTest {
 
 
     @Test
     public void givenUser_whenUseFooClient_thenOkForFooResourceOnly() {
-        final String accessToken = obtainAccessToken("fooClientIdPassword", "john", "123");
+        final String accessToken = obtainAccessToken("fooClientIdPassword", "user@gmail.com", "123");
 
         final Response fooResponse =
                 RestAssured
@@ -32,7 +30,7 @@ public class PasswordFlowTest {
 
     @Test
     public void givenUser_whenUseBarClient_thenOkForBarResourceReadOnly() {
-        final String accessToken = obtainAccessToken("myApp", "john", "123");
+        final String accessToken = obtainAccessToken("myApp", "user@gmail.com", "123");
 
         final Response fooResponse = RestAssured
                 .given()
@@ -44,7 +42,7 @@ public class PasswordFlowTest {
 
     @Test
     public void givenAdmin_whenUseBarClient_thenOkForBarResourceReadWrite() {
-        final String accessToken = obtainAccessToken("myApp", "tom", "111");
+        final String accessToken = obtainAccessToken("myApp", "admin@gmail.com", "123");
 
         final Response fooResponse = RestAssured
                 .given()
@@ -61,7 +59,7 @@ public class PasswordFlowTest {
         params.put("client_id", clientId);
         params.put("username", username);
         params.put("password", password);
-        final Response response = RestAssured.given().auth().preemptive().basic(clientId, "secret").and().with().params(params).when().post("http://localhost:8081/auth/oauth/token");
+        final Response response = RestAssured.given().auth().preemptive().basic(clientId, "password").and().with().params(params).when().post("http://localhost:8081/auth/oauth/token");
         return response.jsonPath().getString("access_token");
     }
 
