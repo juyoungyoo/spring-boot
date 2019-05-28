@@ -9,14 +9,14 @@ spring:
     url: jdbc:mysql://localhost:3306/toy?useUnicode=true&characterEncoding=utf8&useSSL=true
     username: juyoung
     password: pass
-  #    initialization-mode: always
+    #    initialization-mode: always
 
   h2:
     console:
       enabled: true
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     show-sql: true
     open-in-view: false
     properties:
@@ -25,19 +25,16 @@ spring:
 
 logging:
   level:
-     root: debug
-#    org.springframework.security: debug
+    #    root: INFO
+    org.springframework.security: debug
 #    org.hibernate.SQL: debug
 #    org.h2: debug
-#    org.springframework.security.oauth2.jwt: debug
+    org.springframework.security.oauth2.jwt: debug
 
-app:
-  auth:
-    tokenSecret: myApp
-    tokenExpirationMsec: 3600000
-#  oauth2:
-#     After successfully authenticating with the OAuth2 Provider,
-#     we'll be generating an auth token for the user and sending the token to the
-#     redirectUri mentioned by the frontend client in the /oauth2/authorize request.
-#     We're not using cookies because they won't work well in mobile clients.
-#    authorizedRedirectUris: http://localhost:8080/oauth2/redirect
+my-app:
+  client-id: myApp
+  client-secret: password
+  user-id: user@gmail.com
+  user-password: 123
+  admin-id: admin@gmail.com
+  admin-password: 123
