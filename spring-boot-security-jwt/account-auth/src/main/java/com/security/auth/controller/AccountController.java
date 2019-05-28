@@ -63,9 +63,7 @@ public class AccountController {
         OAuth2AccessToken accessToken = defaultTokenServices.createAccessToken(auth);
         OAuth2AccessToken enhance = jwtAccessTokenConverter.enhance(accessToken, auth);
 
-
         return enhance;
-        //  jwtAccessTokenConverter.convertAccessToken(accessToken, auth);   // convert
     }
 
     private OAuth2Request getOAuth2Request(UserDetails userDetails) {
@@ -89,14 +87,4 @@ public class AccountController {
                 responseTypes,
                 extensionProperties);
     }
-
-//    @GetMapping
-//    public String loginPage(
-//            @RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient,
-//            @AuthenticationPrincipal OAuth2User oauth2User, Model model) {
-//            model.addAttribute("userName", oauth2User.getName());
-//            model.addAttribute("clientName", authorizedClient.getClientRegistration().getClientName());
-//            model.addAttribute("userAttributes", oauth2User.getAttributes());
-//        return "login";
-//    }
 }

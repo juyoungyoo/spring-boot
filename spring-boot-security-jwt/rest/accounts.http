@@ -5,36 +5,32 @@
 # * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
 # * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
 
-## 토큰 발급 todo : not working
+## 토큰 발급
 POST http://localhost:8080/oauth/token
 Content-Type: application/x-www-form-urlencoded
 Authorization: Basic myApp password
 
 grant_type=password&username=admin@gmail.com&password=123
-
 ###
 
 ## Account 조회
 GET http://localhost:8080/users/1
 Content-Type: application/json
-Authorization: Bearer {{auth_token}}
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJhZG1pbiIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdLCJvcmdhbml6YXRpb24iOiJhZG1pbmtTeFAiLCJleHAiOjE1NTkwMzU0NTcsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwianRpIjoiNTQ5OGY4MDgtNTI5ZC00ODNlLWI3YmEtMjg1ZmM2M2VhOWIxIiwiY2xpZW50X2lkIjoibXlBcHAifQ.mZN08JH55XGJAVyTbIprbfXqasFMi0QSUDxy8USPSsU
 ###
 
 ## Account 수정
 PUT http://localhost:8080/users/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NTkwNjE0MzgsInVzZXJfbmFtZSI6InVzZXIiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwianRpIjoiZmNmMGU4ZTMtYTk1OC00MWE0LThmNDItMjcyNmU1MzYzN2RkIiwiY2xpZW50X2lkIjoibXlBcHAiLCJzY29wZSI6WyJzY29wZSJdfQ.8-BGDpbo724bdiwERCvHbSLXlBaaiEcctfEZl95eOEg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJjaGFuZ2UgbmFtZSIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdLCJvcmdhbml6YXRpb24iOiJjaGFuZ2UgbmFtZU1yVnkiLCJleHAiOjE1NTkwMzUxNTQsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwianRpIjoiNDUyMzMzYjQtYmI2Mi00NTA1LWIyNTgtYzM5NzBmMzI0MDc2IiwiY2xpZW50X2lkIjoibXlBcHAifQ.Svjnv94AdUSpnD7JI1oALcXw7ziQ2xUnYKnymCDOtHY
 
 {
   "name": "change name"
 }
-
 ###
 
 ## Account 삭제
 DELETE http://localhost:8080/users/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJjaGFuZ2UgbmFtZSIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdLCJvcmdhbml6YXRpb24iOiJjaGFuZ2UgbmFtZWFDZE8iLCJleHAiOjE1NTg5NjUyOTMsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwianRpIjoiNzcwODUwY2QtNmI0OC00YjFiLTk2MDUtMmMwODk3ZWUxNTFjIiwiY2xpZW50X2lkIjoibXlBcHAifQ.p-Vv97sRouQbxAVudF8yte_EbPgx0XXZHJhE3-J96nA
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJjaGFuZ2UgbmFtZSIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdLCJvcmdhbml6YXRpb24iOiJjaGFuZ2UgbmFtZU1yVnkiLCJleHAiOjE1NTkwMzUxNTQsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwianRpIjoiNDUyMzMzYjQtYmI2Mi00NTA1LWIyNTgtYzM5NzBmMzI0MDc2IiwiY2xpZW50X2lkIjoibXlBcHAifQ.Svjnv94AdUSpnD7JI1oALcXw7ziQ2xUnYKnymCDOtHY
 ###
