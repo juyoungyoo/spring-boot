@@ -1,38 +1,40 @@
-package com.security.auth.controller;
+package com.juyoung.res.web.controller;
 
-import com.security.auth.domain.Account;
-import com.security.auth.model.AccountUpdateRequest;
-import com.security.auth.security.CustomUserDetailsService;
-import lombok.RequiredArgsConstructor;
+import com.juyoung.res.web.domain.Account;
+import com.juyoung.res.web.model.AccountUpdateRequest;
+import com.juyoung.res.web.service.AccountService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping(value = "/users")
 @RestController
-@RequiredArgsConstructor
 @Slf4j
-public class UserController {
+public class AccountController {
 
-    private final CustomUserDetailsService customUserDetailsService;
+    private final AccountService accountService;
+
+    public AccountController(AccountService accountService) {
+        this.accountService = accountService;
+    }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Account getAccount(@PathVariable final long id) {
-        return customUserDetailsService.search(id);
+        return accountService.search(id);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Account updateAccount(@PathVariable final long id,
                                  @RequestBody final AccountUpdateRequest accountUpdateRequest) {
-        return customUserDetailsService.updateMyAccount(id, accountUpdateRequest);
+        return accountService.updateMyAccount(id, accountUpdateRequest);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAccount(@PathVariable final long id) {
-        customUserDetailsService.deleteAccount(id);
+        accountService.deleteAccount(id);
     }
 
 }

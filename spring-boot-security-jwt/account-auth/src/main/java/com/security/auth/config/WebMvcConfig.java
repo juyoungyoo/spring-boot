@@ -29,4 +29,12 @@ public class WebMvcConfig implements Filter {
             chain.doFilter(req, res);
         }
     }
+
+    @Override
+    public void destroy() {
+    }
+
+    @Override
+    public void init(FilterConfig config) throws ServletException {
+    }
 }

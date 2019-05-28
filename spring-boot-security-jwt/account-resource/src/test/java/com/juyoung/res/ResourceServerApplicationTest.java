@@ -1,6 +1,5 @@
 package com.juyoung.res;
 
-import com.juyoung.res.config.ResourceServerApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

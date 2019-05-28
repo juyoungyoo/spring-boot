@@ -5,3 +5,27 @@ server:
 logging:
   level:
     org.springframework.security: DEBUG
+
+my-app:
+  client-id: myApp
+  client-secret: password
+  user-id: user@gmail.com
+  user-password: 123
+  admin-id: admin@gmail.com
+  admin-password: 123
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/toy?useUnicode=true&characterEncoding=utf8&useSSL=true
+    username: juyoung
+    password: pass
+  h2:
+    console:
+      enabled: true
+  jpa:
+    show-sql: true
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true

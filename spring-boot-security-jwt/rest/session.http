@@ -5,24 +5,15 @@
 # * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
 # * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
 
-## 토큰 발급
-POST http://localhost:8080/oauth/token
-Content-Type: application/x-www-form-urlencoded
-Authorization: Basic myApp password
-
-grant_type=password&username=admin@gmail.com&password=123
-
-###
-
 ## 회원가입
-POST http://localhost:8080/sign-up
+POST http://localhost:8081/auth/sign-up
 Content-Type: application/json
 Accept: application/json
 
 < session-sign-up.json
 
 ### 로그인
-POST http://localhost:8080/sign-in
+POST http://localhost:8081/auth/sign-in
 Content-Type: application/json
 Accept: application/json
 
@@ -30,12 +21,5 @@ Accept: application/json
   "email": "user@gmail.com",
   "password": "123"
 }
-
-###
-GET http://localhost:8080/tokens
-
-###
-GET http://localhost:8080/oauth/check_token
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJhZG1pbiIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdLCJvcmdhbml6YXRpb24iOiJhZG1pbmVOYmUiLCJleHAiOjE1NTkwMzQ1NDUsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwianRpIjoiOWUxY2E1ZTYtNTk4Yi00MDgyLWEyZDMtNzU1YzgzMmIyMDM1IiwiY2xpZW50X2lkIjoibXlBcHAifQ.giEHnHHgS1K-BAWfBO97dshiOgi3Sj9AShiZwty9lDA
 
 ###

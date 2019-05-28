@@ -29,7 +29,7 @@ import java.util.*;
 
 @Controller
 @Slf4j
-public class AccountController {
+public class SessionController {
 
     @Autowired
     AppProperties appProperties;

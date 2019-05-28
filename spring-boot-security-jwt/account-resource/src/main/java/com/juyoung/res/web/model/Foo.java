@@ -1,4 +1,4 @@
-package com.juyoung.res.web.dto;
+package com.juyoung.res.web.model;
 
 
 public class Foo {
@@ -15,8 +15,6 @@ public class Foo {
         this.id = id;
         this.name = name;
     }
-
-    //
 
     public long getId() {
         return id;

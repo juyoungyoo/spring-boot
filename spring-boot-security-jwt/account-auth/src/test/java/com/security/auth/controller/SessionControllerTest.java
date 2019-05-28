@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 //(classes = {AuthServerConfig.class, SecurityConfig.class, CustomUserDetailsService.class, AppProperties.class})
 @ActiveProfiles("test")
-public class AccountControllerTest {
+public class SessionControllerTest {
 
     @Autowired
     AppProperties appProperties;

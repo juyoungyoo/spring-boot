@@ -14,12 +14,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class ImplicitFlowTest {
-    public final static String AUTH_SERVER = "http://localhost:8080";
+    public final static String AUTH_SERVER = "http://localhost:8081/auth";
     public final static String RESOURCE_SERVER = "http://localhost:8082/account";
 
     @Test
     public void givenUser_whenUseFooClient_thenOkForFooResourceOnly() {
-        final String accessToken = obtainAccessToken("testImplicitClientId", "user@gmail.com", "123");
+        final String accessToken = obtainAccessToken("myAppImplicit", "user@gmail.com", "123");
 
         final Response fooResponse = RestAssured.given().header("Authorization", "Bearer " + accessToken).get(RESOURCE_SERVER + "/foos/1");
         assertEquals(200, fooResponse.getStatusCode());
@@ -29,7 +29,7 @@ public class ImplicitFlowTest {
     private String obtainAccessToken(String clientId,
                                      String username,
                                      String password) {
-        final String redirectUrl = "http://localhost:8080/";
+        final String redirectUrl = "http://localhost:8081/auth";
 
         // user login
         Response response = RestAssured.given()

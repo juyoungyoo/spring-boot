@@ -50,25 +50,25 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
         clients.inMemory()
                 .withClient(appProperties.getClientId())
                 .secret(passwordEncoder.encode(appProperties.getClientSecret()))
-                .authorizedGrantTypes("password", "refresh_token", "implicit")
+                .authorizedGrantTypes("password", "refresh_token", "authorization_code")
                 .scopes("read","write")
                 .accessTokenValiditySeconds(10 * 60) // 10 min
                 .refreshTokenValiditySeconds(6 * 10 * 60)
-                .redirectUris("http://localhost:8080/")
+                .redirectUris("http://localhost:8081/auth")
+                .and()
+                .withClient("myAppImplicit")
+                .authorizedGrantTypes("implicit")
+                .scopes("read", "write")
+                .autoApprove(true)
+                .redirectUris("http://localhost:8081/auth")
         .and()
                 .withClient("fooClientIdPassword")
                 .secret(passwordEncoder.encode("secret"))
-                .scopes("foo", "read", "write")
+                .scopes("read", "write")
                 .authorizedGrantTypes("password", "authorization_code", "refresh_token")
-                .accessTokenValiditySeconds(3600)       // 1 hour
-                .refreshTokenValiditySeconds(2592000)  // 30 days
-                .redirectUris("http://www.example.com", "http://localhost:8089/", "http://localhost:8080/login/oauth2/code/custom", "http://localhost:8080/ui-thymeleaf/login/oauth2/code/custom")
-                .and()
-                .withClient("testImplicitClientId")
-                .authorizedGrantTypes("implicit")
-                .scopes("read", "write", "foo", "bar")
-                .autoApprove(true)
-                .redirectUris("http://localhost:8080/");
+                .accessTokenValiditySeconds(10 * 60)       // 1 hour
+                .refreshTokenValiditySeconds(6 * 10 * 60)  // 30 days
+                .redirectUris("http://localhost:8081/auth")
         ;
     }
 
@@ -79,8 +79,6 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
         defaultTokenServices.setTokenStore(tokenStore());
         defaultTokenServices.setSupportRefreshToken(true);
         defaultTokenServices.setAuthenticationManager(authenticationManager);
-//        defaultTokenServices.setTokenEnhancer(tokenEnhancer());
-//        defaultTokenServices.setClientDetailsService(customUserDetailsService);
         return defaultTokenServices;
     }
 

@@ -1,8 +1,10 @@
-package com.security.auth.controller;
+package com.juyoung.res.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.security.auth.common.AppProperties;
-import com.security.auth.model.AccountUpdateRequest;
+import com.juyoung.res.web.common.AppProperties;
+import com.juyoung.res.web.model.AccountUpdateRequest;
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,39 +12,42 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.security.oauth2.common.util.Jackson2JsonParser;
 import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@WebAppConfiguration
+@SpringBootTest // (classes = ResourceServerApplication.class, webEnvironment = WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-public class UserControllerTest {
+public class AccountControllerTest {
 
     @Autowired
     AppProperties appProperties;
     @Autowired
     ObjectMapper objectMapper;
+
+    MockMvc mockMvc;
     @Autowired
     private WebApplicationContext wac;
     @Autowired
     private FilterChainProxy springSecurityFilterChain;
-    MockMvc mockMvc;
 
     @Before
     public void setup() {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).addFilter(springSecurityFilterChain).build();       // todo : springSecurityFilterChain 추가할 시 mockMvc 주입을 안해도 사용이 가능하다 이유 찾기
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).addFilter(springSecurityFilterChain).build();
     }
 
     @Test
@@ -107,24 +112,23 @@ public class UserControllerTest {
         ;
     }
 
-
     private String getBearer() {
-        return "bearer " + obtainAccessToken();
+        return "Bearer " + obtainAccessToken();
     }
 
     private String obtainAccessToken() {
-        ResultActions resultActions = null;
-        try {
-            resultActions = mockMvc.perform(post("/oauth/token")
-                    .with(httpBasic(appProperties.getClientId(), appProperties.getClientSecret()))
-                    .param("username", appProperties.getAdminId())
-                    .param("password", appProperties.getAdminPassword())
-                    .param("grant_type", "password"));
-            String response = resultActions.andReturn().getResponse().getContentAsString();
-            Jackson2JsonParser parser = new Jackson2JsonParser();
-            return parser.parseMap(response).get("access_token").toString();
-        } catch (Exception e) {
-            return null;
-        }
+        final Map<String, String> params = new HashMap<String, String>();
+        params.put("grant_type", "password");
+        params.put("username", "user@gmail.com");
+        params.put("password", "123");
+        final Response response = RestAssured
+                .given().auth()
+                .preemptive()
+                .basic("myApp", "password")
+                .and()
+                .with()
+                .params(params).when()
+                .post("http://localhost:8081/auth/oauth/token");
+        return response.jsonPath().getString("access_token");
     }
 }
