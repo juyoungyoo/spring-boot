@@ -2,7 +2,7 @@
 - zuul-gateway : api gateway (port: 8080)
 - account-auth : authentication server (port: 8081)
 - account-resource : resource server (port: 8082)
-- web : front server (port: 8083)
+- web : front server (port: 8083)       // todo : 추후
  
 ## 요구사항 및 TODO
 - [x] authorization_code grant 토큰 발급
