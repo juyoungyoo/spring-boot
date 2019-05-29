@@ -1,7 +1,5 @@
 server:
   port: 8083
-  servlet:
-    context-path: /ui
 
 spring:
   security:
@@ -9,11 +7,11 @@ spring:
       client:
         registration:
           custom:
-            client-id: fooClientIdPassword
-            client-secret: secret
-            scope: read,write,foo
+            client-id: myApp
+            client-secret: password
+            scope: read,write
             authorization-grant-type: authorization_code
-            redirect-uri: http://localhost:8080/ui/login/oauth2/code/custom
+            redirect-uri: http://localhost:8083/login/oauth2/code/custom
         provider:
           custom:
             authorization-uri: http://localhost:8081/auth/oauth/authorize

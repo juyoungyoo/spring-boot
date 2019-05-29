@@ -1,7 +1,6 @@
 package com.security.auth.security;
 
 
-import com.security.auth.common.AppProperties;
 import com.security.auth.domain.Account;
 import com.security.auth.exception.AccountNotFoundException;
 import com.security.auth.exception.EmailDuplicationException;
@@ -18,8 +17,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    AppProperties appProperties;
     @Autowired
     AccountRepository accountRepository;
     @Autowired

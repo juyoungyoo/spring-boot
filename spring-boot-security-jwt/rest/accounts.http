@@ -1,28 +1,14 @@
-# For a quick start check out our HTTP Requests collection (Tools|HTTP Client|Open HTTP Requests Collection).
-#
-# Following HTTP Request Live Templates are available:
-# * 'gtrp' and 'gtr' create a GET request with or without query parameters;
-# * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
-# * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
-
-## 토큰 발급
-POST http://localhost:8081/auth/oauth/token
-Content-Type: application/x-www-form-urlencoded
-Authorization: Basic myApp password
-
-grant_type=password&username=admin@gmail.com&password=123
-###
-
+## Run account-resource server
 ## Account 조회
 GET http://localhost:8082/account/users/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NTkwOTg4ODYsInVzZXJfbmFtZSI6InVzZXIiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwianRpIjoiYjU0MDQyOTEtYjBmYy00Y2RlLWE0MzgtNGY2MDE4NTI5NTgwIiwiY2xpZW50X2lkIjoibXlBcHAiLCJzY29wZSI6WyJzY29wZSJdfQ.hCxE4x8AyMXAXi8RxARdhTpepbhkArpRk5sKBboDFIY
+Authorization: Bearer {{auth_token}}
 ###
 
 ## Account 수정
 PUT http://localhost:8082/account/users/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJjaGFuZ2UgbmFtZSIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdLCJvcmdhbml6YXRpb24iOiJjaGFuZ2UgbmFtZU1yVnkiLCJleHAiOjE1NTkwMzUxNTQsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwianRpIjoiNDUyMzMzYjQtYmI2Mi00NTA1LWIyNTgtYzM5NzBmMzI0MDc2IiwiY2xpZW50X2lkIjoibXlBcHAifQ.Svjnv94AdUSpnD7JI1oALcXw7ziQ2xUnYKnymCDOtHY
+Authorization: Bearer {{auth_token}}
 
 {
   "name": "change name"
@@ -32,5 +18,5 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJja
 ## Account 삭제
 DELETE http://localhost:8082/account/users/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJjaGFuZ2UgbmFtZSIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdLCJvcmdhbml6YXRpb24iOiJjaGFuZ2UgbmFtZU1yVnkiLCJleHAiOjE1NTkwMzUxNTQsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwianRpIjoiNDUyMzMzYjQtYmI2Mi00NTA1LWIyNTgtYzM5NzBmMzI0MDc2IiwiY2xpZW50X2lkIjoibXlBcHAifQ.Svjnv94AdUSpnD7JI1oALcXw7ziQ2xUnYKnymCDOtHY
+Authorization: Bearer {{auth_token}}
 ###

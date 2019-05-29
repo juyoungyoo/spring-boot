@@ -13,6 +13,7 @@ import java.util.Map;
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 
+// account-auth, account-resource server 실행 후 test code run
 public class AuthorizationCodeTest {
     public final static String AUTH_SERVER = "http://localhost:8081/auth";
     public final static String RESOURCE_SERVER = "http://localhost:8082/account";
@@ -24,9 +25,6 @@ public class AuthorizationCodeTest {
         final Response fooResponse = RestAssured.given().header("Authorization", "Bearer " + accessToken).get(RESOURCE_SERVER + "/foos/1");
         assertEquals(200, fooResponse.getStatusCode());
         assertNotNull(fooResponse.jsonPath().get("name"));
-
-//        final Response barResponse = RestAssured.given().header("Authorization", "Bearer " + accessToken).get(RESOURCE_SERVER + "/bars/1");
-//        assertEquals(403, barResponse.getStatusCode());
     }
 
     private String obtainAccessTokenWithAuthorizationCode(String clientId,

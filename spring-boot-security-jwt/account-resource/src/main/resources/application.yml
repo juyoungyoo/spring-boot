@@ -7,6 +7,10 @@ logging:
     org.springframework.security: DEBUG
 
 my-app:
+  auth:
+    client-id: myApp
+    client-secret: password
+    redirect-url: http://localhost:8081/auth/oauth/check_token
   client-id: myApp
   client-secret: password
   user-id: user@gmail.com

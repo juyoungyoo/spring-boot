@@ -13,6 +13,7 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+// account-auth, account-resource server 실행 후 test code run
 public class ImplicitFlowTest {
     public final static String AUTH_SERVER = "http://localhost:8081/auth";
     public final static String RESOURCE_SERVER = "http://localhost:8082/account";

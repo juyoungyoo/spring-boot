@@ -3,7 +3,10 @@ server:
 zuul:
   sensitiveHeaders: Cookie,Set-Cookie
   routes:
-    spring-security-oauth-resource:
+    ssesion:
+      path: /session/**
+      url: http://localhost:8081/auth/session
+    account:
       path: /account/**
       url: http://localhost:8082/account
     oauth:
@@ -14,4 +17,17 @@ security:
   oauth2:
     resource:
       jwt:
-        key-value: 123
+        key-value:
+          -----BEGIN PUBLIC KEY-----
+          MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsf2wp2q+pxW+n3oomIUc
+          qGLqAseh/aCBdir9d0t5uM3nnXUWPHd25gK2/jZ///9z60e5CJ+1G6ZFuISI6AOB
+          J+RY4jL6B4MsFfIxbLkr6qUHGmXO6NnW8fM40fabqHBaHiS27NzGOskWH7Uqejvu
+          xh6aL6wFLnarsg5oodtw1LY9si9rbjny8Xu6CawFvhRruw/7ROIv4pMFbJXsbcxt
+          0AqXMeNkm3mN9aVhFA9SmWoMoo02KlUuiKcicQPmoUJpj8SJ20H80a+RKSClLy2k
+          0G64nlZYbXNvPkbJKj31HO+Bk33EkxrtTa0lHnWYVv/JMOOml0D6c5tv4ki6MtaM
+          AQIDAQAB
+          -----END PUBLIC KEY-----
+
+logging:
+  level:
+    ROOT: INFO

@@ -50,7 +50,7 @@ public class Account extends BaseAuditEntity {
         this.state = state;
     }
 
-    public void updateMyAccount(AccountUpdateRequest dto) {
+    public void updateAccount(AccountUpdateRequest dto) {
         name = dto.getName();
     }
 

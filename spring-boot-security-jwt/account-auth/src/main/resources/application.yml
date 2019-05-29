@@ -3,13 +3,13 @@ server:
   servlet:
     context-path: /auth
 
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/toy?useUnicode=true&characterEncoding=utf8&useSSL=true
     username: juyoung
     password: pass
-    #    initialization-mode: always
 
   h2:
     console:
@@ -25,11 +25,8 @@ spring:
 
 logging:
   level:
-    #    root: INFO
-    org.springframework.security: debug
-#    org.hibernate.SQL: debug
-#    org.h2: debug
-    org.springframework.security.oauth2.jwt: debug
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2.jwt: DEBUG
 
 my-app:
   client-id: myApp

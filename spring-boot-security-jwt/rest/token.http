@@ -1,18 +1,34 @@
-# For a quick start check out our HTTP Requests collection (Tools|HTTP Client|Open HTTP Requests Collection).
-#
-# Following HTTP Request Live Templates are available:
-# * 'gtrp' and 'gtr' create a GET request with or without query parameters;
-# * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
-# * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
-
-## 토큰 발급
+## todo : implict
+## 토큰 발급 ( grant type: password )
 POST http://localhost:8081/auth/oauth/token
 Content-Type: application/x-www-form-urlencoded
 Authorization: Basic myApp password
 
 grant_type=password&username=admin@gmail.com&password=123
 > {%
-    client.global.set("auth_token", response.body.json.token);
+    client.global.set("auth_token", response.body.access_token);
+    client.log("ACCESSTOKEN : " + client.global.get("auth_token"));
 %}
+
+###
+## implict grant type 방식 로그인
+POST http://localhost:8081/auth/login?username=user@gmail.com&password=123
+Content-Type: application/x-www-form-urlencoded
+
+> {%
+client.global.set("JSESSIONID", response.headers.valueOf("Set-Cookie").split(";")[0].split("=")[1]);
+client.log("쿠키: "+client.global.get("JSESSIONID"));
+%}
+
+###
+GET http://localhost:8081/auth/oauth/authorize?response_type=token&client_id=myAppImplicit&redirect_uri=http://localhost:8081/auth
+Cookie: JESESSIONID={{JSESSIONID}}
+
+> {%
+client.log(response.headers.JSESSIONID);
+client.log(response.status);
+client.log(response.headers.LOCATION);
+client.log(response.headers);
+ %}
 
 ###

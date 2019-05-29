@@ -1,19 +1,47 @@
-# Spring security5 + OAuth2 + Spring zuul gateway
+# Spring security5 + OAuth2 + Spring zuul gateway + JWT 
+- zuul-gateway : api gateway (port: 8080)
 - account-auth : authentication server (port: 8081)
 - account-resource : resource server (port: 8082)
-- zuul-gateway : api gateway (port: 8080)
 - web : front server (port: 8083)
  
- 
 ## 요구사항 및 TODO
-- [ ] authorization_code grant 토큰 발급
+- [x] authorization_code grant 토큰 발급
 - [x] userDetailService 연결
-- [x] tokenStore
-- [x] create, updateDate 추가
-- [x] 회원가입
+- [x] jwtTokenStore 연동 
+- [x] create, updateDate 추가 ( Auditing )
+
+__Auth server__
+- [x] 회원가입 
+- [x] 로그인 시 토큰 발급
+
+__Account resource server__
+- [x] token 확인은 auth server로 remote하여 확인
 - [x] 계정 조회, 수정, 탈퇴 
-- [x] 로그인 시 토큰 발급 및 token store 등록
-- [ ] 본인 계정정보 조회
+- [x] 계정정보 조회
+- [x] 본인 계정정보 조회
+
+__API GateWay__
+- [x] token 검증 및 필터 
+- [x] resource routing 하는 라우터 역할
+
+---
+### generate JWT public key
+[JWT 설정 및 키 생성방법](https://www.baeldung.com/spring-security-oauth-jwt)
+Generate JKS Java KeyStore File
+```
+keytool -genkeypair \ 
+        -alias friday \
+        -keyalg RSA \ 
+        -keypass colini \
+        -keystore friday-store.jks \
+        -storepass colini_store
+```
+Export Public Key
+```
+keytool -list -rfc --keystore friday-store.jks | openssl x509 -inform pem -pubkey
+```
+---
+
 
 ## Obtaining an Access Token
 ```
@@ -22,7 +50,7 @@ curl -X POST \
   -H 'Authorization: Basic Zm9vQ2xpZW50SWRQYXNzd29yZDpzZWNyZXQ=' \
   -H 'Cache-Control: no-cache' \
   -H 'Content-Type: application/x-www-form-urlencoded' \
-  -d 'grant_type=password&password=123&username=john'
+  -d 'grant_type=password&password=123&username=user@gmail.com'
 ```
 __result__
 ```json

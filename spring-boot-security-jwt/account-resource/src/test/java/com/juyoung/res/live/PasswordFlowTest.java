@@ -11,6 +11,7 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+// account-auth, account-resource server 실행 후 test code run
 public class PasswordFlowTest {
 
     @Test
@@ -32,12 +33,12 @@ public class PasswordFlowTest {
 
         RestAssured
                 .given()
-                    .header("Authorization", "Bearer " + accessToken)
+                .header("Authorization", "Bearer " + accessToken)
                 .get("http://localhost:8082/account/foos/1")
                 .andReturn()
                 .then()
                 .statusCode(403)
-                ;
+        ;
     }
 
     private String obtainAccessToken(String clientId,

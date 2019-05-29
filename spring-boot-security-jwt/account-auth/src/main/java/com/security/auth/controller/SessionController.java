@@ -27,8 +27,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import java.io.Serializable;
 import java.util.*;
 
-@Controller
 @Slf4j
+@Controller
 public class SessionController {
 
     @Autowired
@@ -45,13 +45,13 @@ public class SessionController {
     TokenStore tokenStore;
 
     @ResponseBody
-    @PostMapping(value = "/sign-up", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/session/sign-up", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public Account signUp(@RequestBody SignUpRequest signUpRequest) {
         return customUserDetailsService.signUp(signUpRequest);
     }
 
-    @PostMapping(value = "/sign-in")
+    @PostMapping(value = "/session/sign-in")
     @ResponseBody
     public OAuth2AccessToken signIn(@RequestBody SignInRequest signInRequest) {
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(signInRequest.getEmail());

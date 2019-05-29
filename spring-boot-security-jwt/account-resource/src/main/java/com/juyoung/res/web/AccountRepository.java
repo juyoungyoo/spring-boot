@@ -1,4 +1,4 @@
-package com.juyoung.res.web.repository;
+package com.juyoung.res.web;
 
 import com.juyoung.res.web.domain.Account;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/login", "/sign-in", "/sign-up").permitAll()
+                .antMatchers("/", "/login", "/session/**").permitAll()
                 .antMatchers("/oauth/**").permitAll()
                 .antMatchers("/oauth/token/revokeById/**").permitAll()
                 .antMatchers("/tokens/**").permitAll()
@@ -56,6 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticated()
                 .and()
                 .formLogin()
+                .defaultSuccessUrl("/")
                 .and()
                 .csrf().disable()
                 .httpBasic()

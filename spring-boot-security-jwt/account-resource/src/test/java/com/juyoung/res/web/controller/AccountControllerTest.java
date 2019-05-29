@@ -1,7 +1,6 @@
 package com.juyoung.res.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.juyoung.res.web.common.AppProperties;
 import com.juyoung.res.web.model.AccountUpdateRequest;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
@@ -30,20 +29,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
-@SpringBootTest // (classes = ResourceServerApplication.class, webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest
 @ActiveProfiles("test")
 public class AccountControllerTest {
 
     @Autowired
-    AppProperties appProperties;
-    @Autowired
     ObjectMapper objectMapper;
-
     MockMvc mockMvc;
     @Autowired
     private WebApplicationContext wac;
     @Autowired
     private FilterChainProxy springSecurityFilterChain;
+
+    private static final String TEST_USER_ID = "user@gmail.com";
+    private static final String TEST_USER_PASSWORD = "password";
+    private static final String AUTH_OBTAIN_TOKEN_URL = "http://localhost:8081/auth/oauth/token";
 
     @Before
     public void setup() {
@@ -53,7 +53,7 @@ public class AccountControllerTest {
     @Test
     public void searchAccountById() throws Exception {
         long id = 1L;
-        String email = appProperties.getAdminId();
+        String email = TEST_USER_ID;
 
         mockMvc.perform(get("/users/" + id)
                 .header(HttpHeaders.AUTHORIZATION, getBearer())
@@ -68,7 +68,7 @@ public class AccountControllerTest {
     // todo : principal 사용법
     @Test
     public void getMyAccountIfo() throws Exception {
-        String expectedEmail = appProperties.getAdminId();
+        String expectedEmail = TEST_USER_ID;
 
         mockMvc.perform(get("/users/me")
                 .header(HttpHeaders.AUTHORIZATION, getBearer())
@@ -119,8 +119,8 @@ public class AccountControllerTest {
     private String obtainAccessToken() {
         final Map<String, String> params = new HashMap<String, String>();
         params.put("grant_type", "password");
-        params.put("username", "user@gmail.com");
-        params.put("password", "123");
+        params.put("username", TEST_USER_ID);
+        params.put("password", TEST_USER_PASSWORD);
         final Response response = RestAssured
                 .given().auth()
                 .preemptive()
@@ -128,7 +128,7 @@ public class AccountControllerTest {
                 .and()
                 .with()
                 .params(params).when()
-                .post("http://localhost:8081/auth/oauth/token");
+                .post(AUTH_OBTAIN_TOKEN_URL);
         return response.jsonPath().getString("access_token");
     }
 }

@@ -1,9 +1,8 @@
-package com.juyoung.res.web.service;
+package com.juyoung.res.web;
 
 import com.juyoung.res.web.domain.Account;
 import com.juyoung.res.web.exception.AccountNotFoundException;
 import com.juyoung.res.web.model.AccountUpdateRequest;
-import com.juyoung.res.web.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,7 @@ public class AccountService {
                                    AccountUpdateRequest accountUpdateRequest) {
         Account account = accountRepository.findById(id)
                 .orElseThrow(() -> new AccountNotFoundException(id));
-        account.updateMyAccount(accountUpdateRequest);
+        account.updateAccount(accountUpdateRequest);
         return accountRepository.save(account);
     }
 
