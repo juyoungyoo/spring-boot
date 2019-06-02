@@ -1,4 +1,4 @@
-package com.inflearn.springbootsecurity;
+package com.inflearn.springbootsecurity.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
