@@ -33,5 +33,6 @@ spring.security.user.password
 [UserDetailsServie 구현](https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#jc-authentication-userdetailsservice)   
 [PasswordEncoder 설정 및 사용](https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#core-services-password-encoding)
 
-###참고 
+
+### 참고 
 백기선 - 스프링 부트 개념과 활용
