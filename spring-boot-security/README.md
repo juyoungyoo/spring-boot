@@ -29,9 +29,9 @@ spring.security.user.name
 spring.security.user.password
 ```
 
-[스프링 부트 시큐리티 테스트](https://docs.spring.io/spring-security/site/docs/current/reference/html/test-method.html)
-[UserDetailsServie 구현](https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#jc-authentication-userdetailsservice)
-[PasswordEncoder 설정 및 사용](https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#core-services-password-encoding)
+[스프링 부트 시큐리티 테스트](https://docs.spring.io/spring-security/site/docs/current/reference/html/test-method.html)     
+[UserDetailsServie 구현](https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#jc-authentication-userdetailsservice)     
+[PasswordEncoder 설정 및 사용](https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#core-services-password-encoding)       
 
 ###참고 
 백기선 - 스프링 부트 개념과 활용
