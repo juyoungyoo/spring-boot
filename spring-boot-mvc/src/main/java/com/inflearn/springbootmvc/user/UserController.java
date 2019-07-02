@@ -3,7 +3,7 @@ package com.inflearn.springbootmvc.user;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 public class UserController {
 
     @GetMapping("/hello")
